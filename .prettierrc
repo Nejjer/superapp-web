@@ -1,1 +1,4 @@
-{}
+{
+  "singleQuote": true,
+  "jsx-curly-brace-presence": false
+}
