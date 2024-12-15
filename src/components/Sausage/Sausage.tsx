@@ -9,12 +9,11 @@ interface Props {
 }
 
 export const Sausage: FC<Props> = ({ text, suffix, percentage }) => {
-  const width = (260 / 100) * percentage < 48 ? 48 : (260 / 100) * percentage;
   return (
     <div className={styles.item}>
       <div
         style={{
-          width: `${width}px`,
+          width: `${percentage}%`,
         }}
         className={styles.sausage}
       />
