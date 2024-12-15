@@ -13,7 +13,7 @@ export const Sausage: FC<Props> = ({ text, suffix, percentage }) => {
     <div className={styles.item}>
       <div
         style={{
-          width: `${percentage}%`,
+          width: `${percentage < 15 ? 15 : percentage}%`,
         }}
         className={styles.sausage}
       />
