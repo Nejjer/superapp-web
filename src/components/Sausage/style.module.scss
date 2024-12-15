@@ -1,0 +1,33 @@
+.item {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 24px;
+  gap: 8px;
+  position: relative;
+  background-color: #f4f9fc;
+}
+
+.text {
+  height: 30px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 24px;
+  gap: 8px;
+  position: relative;
+}
+
+.sausage {
+  height: 100%;
+  border-radius: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #b2ebff;
+  transition: width 0.5s;
+}

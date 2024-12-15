@@ -10,5 +10,12 @@
 }
 
 .App {
-  grid-template-columns: 1rf 1rf;
+  display: grid;
+  grid-template-columns: 1rf;
+  gap: 24px;
+  align-items: center;
+}
+
+.center {
+  text-align: center;
 }
