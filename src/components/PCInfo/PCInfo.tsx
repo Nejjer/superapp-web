@@ -32,7 +32,7 @@ export const PCInfo: FC<Props> = ({ cpu, gpu, ram, className }) => {
             icon={''}
             text={'CPU fan'}
             suffix={`${cpu.fanSpeed} rpm`}
-            percentage={(cpu.temperature / 1800) * 100}
+            percentage={(cpu.fanSpeed / 1800) * 100}
           />
           <Sausage
             icon={''}
@@ -62,7 +62,7 @@ export const PCInfo: FC<Props> = ({ cpu, gpu, ram, className }) => {
               icon={''}
               text={'GPU fan'}
               suffix={`${gpu.fanSpeed} rpm`}
-              percentage={(gpu.temperature / 2500) * 100}
+              percentage={(gpu.fanSpeed / 2500) * 100}
             />
           </div>
         </Card>
