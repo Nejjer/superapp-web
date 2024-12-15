@@ -1,6 +1,6 @@
 export interface IPCInfo {
   cpu: { load: number; temperature: number; fanSpeed: number };
-  gpu: {
+  gpu?: {
     load: number;
     temperature: number;
     memory: { total: number; used: number };
@@ -11,9 +11,7 @@ export interface IPCInfo {
 
 class Api {
   public async getServerInfo(): Promise<IPCInfo> {
-    return await (
-      await fetch('http://192.168.1.119:8080/api/getPcStatus')
-    ).json();
+    return await (await fetch('api/getPcStatus')).json();
   }
 
   public async getPCInfo(): Promise<IPCInfo> {
