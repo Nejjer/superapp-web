@@ -26,22 +26,23 @@ function App() {
   };
 
   const fetchInfo = async () => {
-    await api.getPCInfo().then(setPCInfo);
     try {
-      await api.getServerInfo().then(setServerInfo);
+      setPCInfo(await api.getPCInfo());
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      setServerInfo(await api.getServerInfo());
     } catch (err) {
       console.log(err);
     }
   };
 
-  if (!pcInfo) {
-    return null;
-  }
   return (
     <div className={styles.App}>
       <Time />
-      <PCInfo {...pcInfo} className={styles.pcInfo} />
-      {serverInfo && <PCInfo {...serverInfo} className={styles.serverInfo} />}
+      <PCInfo pcInfo={pcInfo} className={styles.pcInfo} />
+      <PCInfo pcInfo={serverInfo} className={styles.serverInfo} />
     </div>
   );
 }

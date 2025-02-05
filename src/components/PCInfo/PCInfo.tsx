@@ -5,12 +5,24 @@ import { Sausage } from '../Sausage';
 import styles from './style.module.scss';
 import { IPCInfo } from '../../api/api.ts';
 import clsx from 'clsx';
+import { Loader } from '../Loader/Loader.tsx';
 
-interface Props extends IPCInfo {
+interface Props {
+  pcInfo?: IPCInfo;
   className?: string;
 }
 
-export const PCInfo: FC<Props> = ({ cpu, gpu, ram, className }) => {
+export const PCInfo: FC<Props> = ({ pcInfo, className }) => {
+  if (!pcInfo)
+    return (
+      <div className={clsx(styles.container, className)}>
+        <Card radius={'44px'}>
+          <Loader />
+        </Card>
+      </div>
+    );
+
+  const { cpu, gpu, ram } = pcInfo;
   return (
     <div className={clsx(styles.container, className)}>
       <Card radius={'44px'}>
