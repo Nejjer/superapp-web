@@ -7,6 +7,9 @@
   font-style: normal;
   font-variation-settings: 'wdth' 100;
   color: $primaryColor;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .App {
@@ -36,4 +39,8 @@
 .serverInfo {
   grid-row: 2; /* Этот элемент находится во второй строке */
   grid-column: 2; /* Этот элемент в первом столбце */
+}
+
+.AppContainer {
+  height: 110vh;
 }

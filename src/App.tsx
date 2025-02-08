@@ -22,7 +22,7 @@ function App() {
       fetchInfo().then(() => {
         handleSetTimeout();
       });
-    }, 1000);
+    }, 2000);
   };
 
   const fetchInfo = async () => {
@@ -44,14 +44,16 @@ function App() {
   };
 
   return (
-    <div className={styles.App}>
-      <Time />
-      <PCInfo pcInfo={pcInfo} className={styles.pcInfo} deviveName="PC" />
-      <PCInfo
-        pcInfo={serverInfo}
-        className={styles.serverInfo}
-        deviveName="Server"
-      />
+    <div className={styles.AppContainer}>
+      <div className={styles.App}>
+        <Time />
+        <PCInfo pcInfo={pcInfo} className={styles.pcInfo} deviveName="PC" />
+        <PCInfo
+          pcInfo={serverInfo}
+          className={styles.serverInfo}
+          deviveName="Server"
+        />
+      </div>
     </div>
   );
 }
