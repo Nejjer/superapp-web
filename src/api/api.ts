@@ -15,9 +15,7 @@ class Api {
   }
 
   public async getPCInfo(): Promise<IPCInfo> {
-    return await (
-      await fetch('http://192.168.1.164:8080/api/getPcStatus')
-    ).json();
+    return await (await fetch('/proxy/api/getPcStatus')).json();
   }
 }
 

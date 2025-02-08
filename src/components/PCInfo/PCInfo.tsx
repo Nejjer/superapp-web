@@ -10,9 +10,10 @@ import { Loader } from '../Loader/Loader.tsx';
 interface Props {
   pcInfo?: IPCInfo;
   className?: string;
+  deviveName?: string;
 }
 
-export const PCInfo: FC<Props> = ({ pcInfo, className }) => {
+export const PCInfo: FC<Props> = ({ pcInfo, className, deviveName }) => {
   if (!pcInfo)
     return (
       <div className={clsx(styles.container, className)}>
@@ -27,7 +28,10 @@ export const PCInfo: FC<Props> = ({ pcInfo, className }) => {
     <div className={clsx(styles.container, className)}>
       <Card radius={'44px'}>
         <div className={styles.list}>
-          <div className={styles.center}>СPU</div>
+          <div className={styles.center}>
+            {deviveName}
+            {deviveName ? ' - ' : ''}Common
+          </div>
           <Sausage
             icon={''}
             text={'CPU temperature'}
@@ -57,7 +61,10 @@ export const PCInfo: FC<Props> = ({ pcInfo, className }) => {
       {gpu && (
         <Card radius={'44px'}>
           <div className={styles.list}>
-            <div className={'center'}>GPU</div>
+            <div className={styles.center}>
+              {deviveName}
+              {deviveName ? ' - ' : ''}GPU
+            </div>
             <Sausage
               icon={''}
               text={'GPU usage'}

@@ -12,6 +12,10 @@ export default defineConfig({
         target: 'http://arasaka.vi/mon/',
         changeOrigin: true,
       },
+      '/proxy': {
+        target: 'http://arasaka.vi/mon/',
+        changeOrigin: true,
+      },
     },
   },
   base: './',

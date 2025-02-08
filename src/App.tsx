@@ -22,17 +22,22 @@ function App() {
       fetchInfo().then(() => {
         handleSetTimeout();
       });
-    }, 800);
+    }, 1000);
   };
 
   const fetchInfo = async () => {
     try {
       setPCInfo(await api.getPCInfo());
+      api.getPCInfo().then((res) => {
+        setPCInfo(res);
+      });
     } catch (err) {
       console.log(err);
     }
     try {
-      setServerInfo(await api.getServerInfo());
+      api.getServerInfo().then((res) => {
+        setServerInfo(res);
+      });
     } catch (err) {
       console.log(err);
     }
@@ -41,8 +46,12 @@ function App() {
   return (
     <div className={styles.App}>
       <Time />
-      <PCInfo pcInfo={pcInfo} className={styles.pcInfo} />
-      <PCInfo pcInfo={serverInfo} className={styles.serverInfo} />
+      <PCInfo pcInfo={pcInfo} className={styles.pcInfo} deviveName="PC" />
+      <PCInfo
+        pcInfo={serverInfo}
+        className={styles.serverInfo}
+        deviveName="Server"
+      />
     </div>
   );
 }
