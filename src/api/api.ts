@@ -15,7 +15,7 @@ class Api {
   }
 
   public async getPCInfo(): Promise<IPCInfo> {
-    return await (await fetch('/proxy/api/getPcStatus')).json();
+    return await (await fetch('proxy/api/getPcStatus')).json();
   }
 }
 
