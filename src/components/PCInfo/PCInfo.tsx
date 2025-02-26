@@ -83,6 +83,12 @@ export const PCInfo: FC<Props> = ({ pcInfo, className, deviveName }) => {
               suffix={`${gpu.fanSpeed} rpm`}
               percentage={(gpu.fanSpeed / 2500) * 100}
             />
+            <Sausage
+              icon={''}
+              text={'Memory usage'}
+              suffix={`${gpu.memory.used} Gb`}
+              percentage={(gpu.memory.used / gpu.memory.total) * 100}
+            />
           </div>
         </Card>
       )}

@@ -27,7 +27,6 @@ function App() {
 
   const fetchInfo = async () => {
     try {
-      setPCInfo(await api.getPCInfo());
       api.getPCInfo().then((res) => {
         setPCInfo(res);
       });
