@@ -18,6 +18,9 @@
   align-items: center;
   grid-template-rows: auto auto; /* Два ряда */
   grid-template-columns: 1fr 1fr; /* Два столбца */
+  @media (max-width: $md) {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 768px) {
@@ -31,15 +34,6 @@
   text-align: center;
 }
 
-.pcInfo {
-  grid-row: 2; /* Этот элемент находится во второй строке */
-  grid-column: 1; /* Этот элемент в первом столбце */
-}
-
-.serverInfo {
-  grid-row: 2; /* Этот элемент находится во второй строке */
-  grid-column: 2; /* Этот элемент в первом столбце */
-}
 
 .AppContainer {
   height: 110vh;

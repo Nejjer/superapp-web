@@ -46,10 +46,9 @@ function App() {
     <div className={styles.AppContainer}>
       <div className={styles.App}>
         <Time />
-        <PCInfo pcInfo={pcInfo} className={styles.pcInfo} deviveName="PC" />
+        <PCInfo pcInfo={pcInfo}deviveName="PC" />
         <PCInfo
           pcInfo={serverInfo}
-          className={styles.serverInfo}
           deviveName="Server"
         />
       </div>
