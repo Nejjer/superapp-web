@@ -11,11 +11,11 @@ export interface IPCInfo {
 
 class Api {
   public async getServerInfo(): Promise<IPCInfo> {
-    return await (await fetch('api/getPcStatus')).json();
+    return await (await fetch('/mon/api/getPcStatus')).json();
   }
 
   public async getPCInfo(): Promise<IPCInfo> {
-    return await (await fetch('proxy/api/getPcStatus')).json();
+    return await (await fetch('/mon/proxy/api/getPcStatus')).json();
   }
 }
 
