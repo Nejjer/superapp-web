@@ -7,6 +7,7 @@
   font-style: normal;
   font-variation-settings: 'wdth' 100;
   color: $primaryColor;
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -16,8 +17,11 @@
   display: grid;
   gap: 16px;
   align-items: center;
-  grid-template-rows: auto auto; /* Два ряда */
-  grid-template-columns: 1fr 1fr; /* Два столбца */
+  grid-template-rows: auto auto;
+  /* Два ряда */
+  grid-template-columns: 1fr 1fr;
+
+  /* Два столбца */
   @media (max-width: $md) {
     grid-template-columns: 1fr;
   }
@@ -25,8 +29,10 @@
 
 @media (min-width: 768px) {
   .App {
-    max-width: 768px; /* Максимальная ширина 768px */
-    margin: 0 auto; /* Центрирование */
+    max-width: 768px;
+    /* Максимальная ширина 768px */
+    margin: 0 auto;
+    /* Центрирование */
   }
 }
 
@@ -37,8 +43,4 @@
 
 .AppContainer {
   height: 110vh;
-}
-
-.someTestClass {
-  height: 100px;
 }

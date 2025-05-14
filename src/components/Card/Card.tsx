@@ -4,7 +4,7 @@ import styles from './style.module.scss';
 
 interface Card {
   children?: ReactNode;
-  radius?: string;
+  radius?: '44px' | '9999px' | '0px' | '24px';
   className?: string;
 }
 

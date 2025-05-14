@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import styles from './index.module.scss';
+import styles from '../index.module.scss';
 import { api, IPCInfo } from '../api/api.ts';
 import { Time } from '../components/Time';
 import { PCInfo } from '../components/PCInfo';
@@ -55,5 +55,3 @@ export const Compumon: FC = () => {
         </div>
     );
 }
-
-export default App;
