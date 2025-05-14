@@ -1,13 +1,138 @@
-import { FC } from "react";
-import styles from './styles.module.scss';
-import { Form } from "./Components/Form";
-import { Card } from "../../components/Card";
+import { FC, useState } from "react";
+import { Button, Card, Center, CloseButton, Container, Dialog, Field, Portal, SegmentGroup, Stack, Textarea } from "@chakra-ui/react";
+import { axiosInstance } from "../../api/axiosInstance";
+import { toaster } from "../../components/ui/toaster";
 
+interface ICheerUp {
+    title: string;
+    desc: string;
+}
+
+const cheerUpTexts: ICheerUp[] = [
+    {
+        title: "🎀 Готово!",
+        desc: `Ты умничка ✨
+С каждым шагом становишься лучше 🌱`,
+    },
+    {
+        title: "💌 Записано~",
+        desc: `Спасибо, что заботишься о себе 💖
+Ты заслуживаешь всего самого светлого 🌸`,
+    },
+    {
+        title: "🐾 Шажок сделан!",
+        desc: `Ты сделал шаг вперед 🚀
+С каждым днем становишься ближе к цели 🌟`,
+    },
+    {
+        title: "✏️ Миссия выполнена!",
+        desc: `Записал — значит, стал сильнее 💪
+Ты на правильном пути, котик 🐱`
+    },
+    {
+        title: "📚 Ретроспектива готова!",
+        desc: `Ты заботишься о себе, и это так важно 💫
+Обними себя мысленно — ты классный! 🫂💜`
+    },
+]
 
 export const RetroWeek: FC = () => {
-    return <div className={styles.container}>
-        <Card radius="24px" className={styles.card}>
-            <Form />
-        </Card>
-    </div>
+    const [productivity, setProductivity] = useState<string | null>("Удовлетворительно");
+    const [done_tasks, setDone_tasks] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [satisfaction, setSatisfaction] = useState<string | null>("Удовлетворительно");
+    const [cheerUpText, setCheerUpText] = useState<ICheerUp>(cheerUpTexts[0]);
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        try {
+            await axiosInstance.post("/add-retro", {
+                productivity,
+                done_tasks,
+                satisfaction,
+            });
+            setDone_tasks("");
+            setCheerUpText(cheerUpTexts[Math.floor(Math.random() * cheerUpTexts.length)])
+            setDialogOpen(true);
+        } catch (error) {
+            toaster.create({
+                description: "Чет не получилось",
+                type: "info",
+            })
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    return (
+        <Container marginTop='20vh'>
+            <Center>
+                <Card.Root>
+                    <Card.Header>Ретро недели</Card.Header>
+                    <Card.Body>
+                        <form>
+                            <Stack gap="24px">
+                                <Field.Root required>
+                                    <Field.Label>
+                                        Производительность
+                                    </Field.Label>
+                                    <SegmentGroup.Root defaultValue="Удовлетворительно" value={productivity} onValueChange={value => setProductivity(value.value)}>
+                                        <SegmentGroup.Indicator />
+                                        <SegmentGroup.Items items={["Плохо", "Удовлетворительно", "Хорошо"]} />
+                                    </SegmentGroup.Root>
+                                </Field.Root>
+
+                                <Field.Root required>
+                                    <Field.Label>
+                                        Удовлетворение
+                                    </Field.Label>
+                                    <SegmentGroup.Root defaultValue="Удовлетворительно" value={satisfaction} onValueChange={value => setSatisfaction(value.value)}>
+                                        <SegmentGroup.Indicator />
+                                        <SegmentGroup.Items items={["Плохо", "Удовлетворительно", "Хорошо"]} />
+                                    </SegmentGroup.Root>
+                                </Field.Root>
+
+                                <Field.Root required>
+                                    <Field.Label>
+                                        Что случилось за неделю?
+                                    </Field.Label>
+                                    <Textarea value={done_tasks} onChange={(e) => setDone_tasks(e.target.value)} placeholder="через перенос" />
+                                </Field.Root>
+                                <Button loading={loading} onClick={handleSubmit} disabled={!done_tasks}>Отправить</Button>
+                            </Stack>
+                        </form>
+                    </Card.Body>
+                </Card.Root>
+                <Dialog.Root open={dialogOpen} onOpenChange={(val) => setDialogOpen(val.open)}>
+                    <Portal>
+                        <Dialog.Backdrop />
+                        <Dialog.Positioner>
+                            <Dialog.Content>
+                                <Dialog.Header>
+                                    <Dialog.Title>{cheerUpText.title}</Dialog.Title>
+                                </Dialog.Header>
+                                <Dialog.Body>
+                                    <p>
+                                        {cheerUpText.desc}
+                                    </p>
+                                </Dialog.Body>
+                                <Dialog.Footer>
+                                    <Dialog.ActionTrigger asChild>
+                                        <Button >Закрыть</Button>
+                                    </Dialog.ActionTrigger>
+
+                                </Dialog.Footer>
+                                <Dialog.CloseTrigger asChild>
+                                    <CloseButton size="sm" />
+                                </Dialog.CloseTrigger>
+                            </Dialog.Content>
+                        </Dialog.Positioner>
+                    </Portal>
+                </Dialog.Root>
+            </Center>
+        </Container>
+    )
 }
