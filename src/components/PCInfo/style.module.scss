@@ -3,7 +3,7 @@
   grid-template-columns: 1fr;
   flex-direction: column;
   gap: 8px;
-  padding: 20px;
+  padding: 8px;
 }
 
 .container {
@@ -11,7 +11,7 @@
   flex-direction: column;
 }
 
-.container > *:last-child {
+.container>*:last-child {
   margin-top: 16px;
 }
 

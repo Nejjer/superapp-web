@@ -26,7 +26,7 @@ export const PCInfo: FC<Props> = ({ pcInfo, className, deviveName }) => {
   const { cpu, gpu, ram } = pcInfo;
   return (
     <div className={clsx(styles.container, className)}>
-      <Card radius={'44px'}>
+      <Card radius={'24px'}>
         <div className={styles.list}>
           <div className={styles.center}>
             {deviveName}

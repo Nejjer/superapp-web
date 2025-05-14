@@ -8,7 +8,7 @@ function App() {
 
   return (
     <Provider>
-      <BrowserRouter>
+      <BrowserRouter basename="/mon">
         <Routes>
           <Route path="/" element={<Compumon />} />
           <Route path="/retro" element={<RetroWeek />} />

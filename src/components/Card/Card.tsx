@@ -1,20 +1,24 @@
 import { FC, ReactNode } from 'react';
 import clsx from 'clsx';
-import styles from './style.module.scss';
+import { Card as ChakraCard } from '@chakra-ui/react';
 
 interface Card {
   children?: ReactNode;
-  radius?: '44px' | '9999px' | '0px' | '24px';
+  radius?: '44px' | '9999px' | '0px' | '24px' | '12px';
   className?: string;
+  header?: ReactNode;
 }
 
-export const Card: FC<Card> = ({ children, radius, className }) => {
+export const Card: FC<Card> = ({ children, radius, className, header }) => {
   return (
-    <div
+    <ChakraCard.Root
       style={{ borderRadius: radius }}
-      className={clsx(styles.container, className)}
+      className={clsx(className)}
     >
-      {children}
-    </div>
+      {header && <ChakraCard.Header>{header}</ChakraCard.Header>}
+      <ChakraCard.Body>
+        {children}
+      </ChakraCard.Body>
+    </ChakraCard.Root>
   );
 };

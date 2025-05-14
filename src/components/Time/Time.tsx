@@ -21,7 +21,7 @@ export const Time = () => {
   }, []);
 
   return (
-    <Card radius={'9999px'} className={styles.card}>
+    <Card radius={'24px'} className={styles.card}>
       <div className={styles.container}>
         <div className={styles.date}>{date}</div>
         <div className={styles.time}>{time}</div>

@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
-import { Button, Card, Center, CloseButton, Container, Dialog, Field, Portal, SegmentGroup, Stack, Textarea } from "@chakra-ui/react";
+import { Button, Center, CloseButton, Container, Dialog, Field, Portal, SegmentGroup, Stack, Textarea } from "@chakra-ui/react";
 import { axiosInstance } from "../../api/axiosInstance";
 import { toaster } from "../../components/ui/toaster";
+import { Card } from "../../components/Card";
 
 interface ICheerUp {
     title: string;
@@ -68,44 +69,41 @@ export const RetroWeek: FC = () => {
 
 
     return (
-        <Container marginTop='20vh'>
+        <Container paddingTop='20vh'>
             <Center>
-                <Card.Root>
-                    <Card.Header>Ретро недели</Card.Header>
-                    <Card.Body>
-                        <form>
-                            <Stack gap="24px">
-                                <Field.Root required>
-                                    <Field.Label>
-                                        Производительность
-                                    </Field.Label>
-                                    <SegmentGroup.Root defaultValue="Удовлетворительно" value={productivity} onValueChange={value => setProductivity(value.value)}>
-                                        <SegmentGroup.Indicator />
-                                        <SegmentGroup.Items items={["Плохо", "Удовлетворительно", "Хорошо"]} />
-                                    </SegmentGroup.Root>
-                                </Field.Root>
+                <Card radius={'12px'} header="Ретро недели" >
+                    <form>
+                        <Stack gap="24px">
+                            <Field.Root required>
+                                <Field.Label>
+                                    Производительность
+                                </Field.Label>
+                                <SegmentGroup.Root defaultValue="Удовлетворительно" value={productivity} onValueChange={value => setProductivity(value.value)}>
+                                    <SegmentGroup.Indicator />
+                                    <SegmentGroup.Items items={["Плохо", "Удовлетворительно", "Хорошо"]} />
+                                </SegmentGroup.Root>
+                            </Field.Root>
 
-                                <Field.Root required>
-                                    <Field.Label>
-                                        Удовлетворение
-                                    </Field.Label>
-                                    <SegmentGroup.Root defaultValue="Удовлетворительно" value={satisfaction} onValueChange={value => setSatisfaction(value.value)}>
-                                        <SegmentGroup.Indicator />
-                                        <SegmentGroup.Items items={["Плохо", "Удовлетворительно", "Хорошо"]} />
-                                    </SegmentGroup.Root>
-                                </Field.Root>
+                            <Field.Root required>
+                                <Field.Label>
+                                    Удовлетворение
+                                </Field.Label>
+                                <SegmentGroup.Root defaultValue="Удовлетворительно" value={satisfaction} onValueChange={value => setSatisfaction(value.value)}>
+                                    <SegmentGroup.Indicator />
+                                    <SegmentGroup.Items items={["Плохо", "Удовлетворительно", "Хорошо"]} />
+                                </SegmentGroup.Root>
+                            </Field.Root>
 
-                                <Field.Root required>
-                                    <Field.Label>
-                                        Что случилось за неделю?
-                                    </Field.Label>
-                                    <Textarea value={done_tasks} onChange={(e) => setDone_tasks(e.target.value)} placeholder="через перенос" />
-                                </Field.Root>
-                                <Button loading={loading} onClick={handleSubmit} disabled={!done_tasks}>Отправить</Button>
-                            </Stack>
-                        </form>
-                    </Card.Body>
-                </Card.Root>
+                            <Field.Root required>
+                                <Field.Label>
+                                    Что случилось за неделю?
+                                </Field.Label>
+                                <Textarea value={done_tasks} onChange={(e) => setDone_tasks(e.target.value)} placeholder="через перенос" />
+                            </Field.Root>
+                            <Button loading={loading} onClick={handleSubmit} disabled={!done_tasks}>Отправить</Button>
+                        </Stack>
+                    </form>
+                </Card>
                 <Dialog.Root open={dialogOpen} onOpenChange={(val) => setDialogOpen(val.open)}>
                     <Portal>
                         <Dialog.Backdrop />
