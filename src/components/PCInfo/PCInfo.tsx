@@ -5,7 +5,7 @@ import { Sausage } from '../Sausage';
 import styles from './style.module.scss';
 import { IPCInfo } from '../../api/api.ts';
 import clsx from 'clsx';
-import { Loader } from '../Loader/Loader.tsx';
+import { Center, Spinner } from '@chakra-ui/react';
 
 interface Props {
   pcInfo?: IPCInfo;
@@ -17,8 +17,10 @@ export const PCInfo: FC<Props> = ({ pcInfo, className, deviveName }) => {
   if (!pcInfo)
     return (
       <div className={clsx(styles.container, className)}>
-        <Card radius={'44px'}>
-          <Loader />
+        <Card radius={'24px'}>
+          <Center>
+            <Spinner size={'xl'} />
+          </Center>
         </Card>
       </div>
     );
@@ -59,7 +61,7 @@ export const PCInfo: FC<Props> = ({ pcInfo, className, deviveName }) => {
         </div>
       </Card>
       {gpu && (
-        <Card radius={'44px'}>
+        <Card radius={'24px'}>
           <div className={styles.list}>
             <div className={styles.center}>
               {deviveName}
