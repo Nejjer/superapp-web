@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styles from './style.module.scss';
 import { Progress, Status, Text } from '@chakra-ui/react';
+import { useColorMode } from '../ui/color-mode';
 
 interface Props {
   icon: string;
@@ -16,6 +17,9 @@ const getColor = (percentage: number): string => {
 };
 
 export const Sausage: FC<Props> = ({ percentage, text, suffix }) => {
+
+  const { colorMode } = useColorMode();
+
   return (
     <div>
       <Progress.Root shape={'rounded'} size={'lg'} value={percentage}>
@@ -27,13 +31,19 @@ export const Sausage: FC<Props> = ({ percentage, text, suffix }) => {
           <div className={styles.suffix}>
             <Status.Root colorPalette={getColor(percentage)}>
               <Status.Indicator />
-              <Text color={percentage < 15 ? 'white' : 'black'}>
+              <Text color={(() => {
+                if (colorMode === 'light') {
+                  return percentage > 15 ? 'white' : 'black';
+                } else {
+                  return percentage > 15 ? 'black' : 'white';
+                }
+              })()}>
                 {suffix}
               </Text>
             </Status.Root>
           </div>
         </Progress.Track>
       </Progress.Root>
-    </div>
+    </div >
   );
 };

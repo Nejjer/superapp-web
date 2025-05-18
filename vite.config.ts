@@ -11,7 +11,7 @@ export default defineConfig({
       short_name: 'SuperApp',
       description: 'Все в одном',
       theme_color: '#282c34',
-      background_color: '#ffffff',
+      background_color: '#09090B',
       display: 'standalone',
       start_url: '/',
       icons: [
@@ -32,12 +32,12 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 3000,
     proxy: {
-      '/api': {
-        target: 'http://arasaka.vi/mon/',
+      '/mon/': {
+        target: 'https://arasaksa-home.didns.ru/',
         changeOrigin: true,
       },
-      '/proxy': {
-        target: 'http://arasaka.vi/mon/',
+      '/api': {
+        target: 'https://arasaksa-home.didns.ru/app/',
         changeOrigin: true,
       },
     },
