@@ -1,0 +1,103 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Retro API",
+        "version": "1.0.0",
+        "description": "API для сохранения ретроспективной оценки продуктивности, удовлетворённости и выполненных задач."
+    },
+    "servers": [
+        {
+            "url": "https://arasaksa-home.didns.ru"
+        }
+    ],
+    "paths": {
+        "/app/api/add-retro": {
+            "post": {
+                "description": "Сохранить ретроспективу",
+                "operationId": "SaveRetro",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "productivity",
+                                    "done_tasks",
+                                    "satisfaction"
+                                ],
+                                "properties": {
+                                    "productivity": {
+                                        "type": "string",
+                                        "enum": [
+                                            "плохо",
+                                            "удовлетворительно",
+                                            "хорошо"
+                                        ],
+                                        "description": "Оценка продуктивности за период"
+                                    },
+                                    "satisfaction": {
+                                        "type": "string",
+                                        "enum": [
+                                            "плохо",
+                                            "удовлетворительно",
+                                            "хорошо"
+                                        ],
+                                        "description": "Уровень удовлетворённости за период"
+                                    },
+                                    "done_tasks": {
+                                        "type": "string",
+                                        "description": "Список выполненных задач, случившихся историй, разделённых переносами строк (\\n)",
+                                        "example": "Пригнал на мотике в Екб\nВпервые остановили ДПС!\nРелизнул Superapp. Даже в pwa сунул"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное сохранение ретроспективы",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ретроспектива сохранена успешно"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации данных",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Некорректное значение поля productivity"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

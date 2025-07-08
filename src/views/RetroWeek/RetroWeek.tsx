@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button, Center, CloseButton, Container, Dialog, Field, Portal, SegmentGroup, Stack, Textarea } from "@chakra-ui/react";
 import { axiosInstance } from "../../api/axiosInstance";
 import { toaster } from "../../components/ui/toaster";
@@ -7,6 +7,12 @@ import { Card } from "../../components/Card";
 interface ICheerUp {
     title: string;
     desc: string;
+}
+
+interface IResponse {
+    productivity: string;
+    done_tasks: string[];
+    satisfaction: string
 }
 
 const cheerUpTexts: ICheerUp[] = [
@@ -45,15 +51,29 @@ export const RetroWeek: FC = () => {
     const [cheerUpText, setCheerUpText] = useState<ICheerUp>(cheerUpTexts[0]);
     const [dialogOpen, setDialogOpen] = useState(false);
 
+    useEffect(() => {
+        axiosInstance.get<IResponse>("/api/get-retro").then((response) => {
+            const { productivity, done_tasks, satisfaction } = response.data;
+            setProductivity(productivity);
+            setDone_tasks(done_tasks.join('\n'));
+            setSatisfaction(satisfaction);
+        }).catch((error) => {
+            console.error("Ошибка при получении данных RetroWeek:", error);
+            toaster.create({
+                description: "Пока нет записи на эту неделю",
+                type: "info",
+            })
+        });
+    }, []);
+
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            await axiosInstance.post("/add-retro", {
+            await axiosInstance.post("/api/add-retro", {
                 productivity,
                 done_tasks,
                 satisfaction,
             });
-            setDone_tasks("");
             setCheerUpText(cheerUpTexts[Math.floor(Math.random() * cheerUpTexts.length)])
             setDialogOpen(true);
         } catch (error) {

@@ -37,7 +37,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       '/api': {
-        target: 'https://arasaksa-home.didns.ru/app/',
+        target: 'https://arasaksa-home.didns.ru',
         changeOrigin: true,
       },
     },

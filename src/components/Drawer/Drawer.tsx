@@ -29,6 +29,7 @@ export const Drawer: FC = () => {
                                 <Button onClick={toggleColorMode}>Toggle theme</Button>
                                 <Separator />
                                 <Separator />
+                                <Button variant={'outline'} onClick={() => window.location.assign('/')}>Galery</Button>
                                 <Button variant={'outline'} onClick={() => navigate('/')}>Compumon</Button>
                                 <Button variant={'outline'} onClick={() => navigate('/retro')}>Retro</Button>
                                 <Separator />
