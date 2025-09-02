@@ -5,6 +5,7 @@ import { Provider } from "./components/ui/provider";
 import { Toaster } from "./components/ui/toaster";
 import { Theme } from "@chakra-ui/react";
 import { Drawer } from "./components/Drawer";
+import { EuroDollars } from "./views/EuroDollars/EuroDollars";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Compumon />} />
             <Route path="/retro" element={<RetroWeek />} />
+            <Route path="/EuroDollars" element={<EuroDollars />} />
           </Routes>
           <Toaster />
         </BrowserRouter>

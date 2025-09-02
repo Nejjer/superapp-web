@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import styles from '../index.module.scss';
-import { api, IPCInfo } from '../api/api.ts';
+import { compuuMonApi, IPCInfo } from '../api/compumonApi.ts';
 import { Time } from '../components/Time';
 import { PCInfo } from '../components/PCInfo';
 
@@ -27,14 +27,14 @@ export const Compumon: FC = () => {
 
     const fetchInfo = async () => {
         try {
-            api.getPCInfo().then((res) => {
+            compuuMonApi.getPCInfo().then((res) => {
                 setPCInfo(res);
             });
         } catch (err) {
             console.log(err);
         }
         try {
-            api.getServerInfo().then((res) => {
+            compuuMonApi.getServerInfo().then((res) => {
                 setServerInfo(res);
             });
         } catch (err) {

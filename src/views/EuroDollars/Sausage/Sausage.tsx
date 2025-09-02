@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import styles from './style.module.scss';
-import { Progress, Status, Text } from '@chakra-ui/react';
-import { useColorMode } from '../ui/color-mode';
+import { Progress, Text } from '@chakra-ui/react';
+import { useColorMode } from '../../../components/ui/color-mode';
 
 /** Сосиска
  * @property text Текст внутри сосиски
@@ -27,24 +27,17 @@ export const Sausage: FC<Props> = ({ percentage, text, suffix }) => {
   return (
     <div>
       <Progress.Root shape={'rounded'} size={'lg'} value={percentage}>
-        <Progress.Label mb="2">
-          {text}
-        </Progress.Label>
-        <Progress.Track height={'30px'} borderRadius={'10px'}>
+
+        <Progress.Track height={'30px'} borderRadius={'10px'} colorPalette={getColor(percentage)}>
           <Progress.Range />
+
           <div className={styles.suffix}>
-            <Status.Root colorPalette={getColor(percentage)}>
-              <Status.Indicator />
-              <Text color={(() => {
-                if (colorMode === 'light') {
-                  return percentage > 15 ? 'white' : 'black';
-                } else {
-                  return percentage > 15 ? 'black' : 'white';
-                }
-              })()}>
-                {suffix}
-              </Text>
-            </Status.Root>
+            <Text color={colorMode === 'dark' ? 'white' : 'black'}>
+              {text}
+            </Text>
+            <Text color={colorMode === 'dark' ? 'white' : 'black'}>
+              {suffix}
+            </Text>
           </div>
         </Progress.Track>
       </Progress.Root>

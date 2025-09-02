@@ -1,0 +1,13 @@
+.suffix {
+  color: black;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  font-weight: 500;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 40px;
+}

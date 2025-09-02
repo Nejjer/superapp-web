@@ -9,7 +9,7 @@ export interface IPCInfo {
   ram: { total: number; used: number };
 }
 
-class Api {
+class CompuuMonApi {
   public async getServerInfo(): Promise<IPCInfo> {
     return await (await fetch('/mon/api/getPcStatus')).json();
   }
@@ -19,4 +19,4 @@ class Api {
   }
 }
 
-export const api = new Api();
+export const compuuMonApi = new CompuuMonApi();

@@ -3,7 +3,7 @@ import 'moment/dist/locale/ru';
 import { FC } from 'react';
 import { Sausage } from '../Sausage';
 import styles from './style.module.scss';
-import { IPCInfo } from '../../api/api.ts';
+import { IPCInfo } from '../../api/compumonApi.ts';
 import clsx from 'clsx';
 import { Center, Spinner } from '@chakra-ui/react';
 
@@ -35,25 +35,21 @@ export const PCInfo: FC<Props> = ({ pcInfo, className, deviveName }) => {
             {deviveName ? ' - ' : ''}Common
           </div>
           <Sausage
-            icon={''}
             text={'CPU temperature'}
             suffix={`${cpu.temperature}°C`}
             percentage={cpu.temperature}
           />
           <Sausage
-            icon={''}
             text={'CPU usage'}
             suffix={`${cpu.load}%`}
             percentage={cpu.load}
           />
           <Sausage
-            icon={''}
             text={'CPU fan'}
             suffix={`${cpu.fanSpeed} rpm`}
             percentage={(cpu.fanSpeed / 1800) * 100}
           />
           <Sausage
-            icon={''}
             text={'Memory usage'}
             suffix={`${ram.used} Gb`}
             percentage={(ram.used / ram.total) * 100}
@@ -68,25 +64,21 @@ export const PCInfo: FC<Props> = ({ pcInfo, className, deviveName }) => {
               {deviveName ? ' - ' : ''}GPU
             </div>
             <Sausage
-              icon={''}
               text={'GPU usage'}
               suffix={`${gpu.load}%`}
               percentage={gpu.load}
             />
             <Sausage
-              icon={''}
               text={'GPU temp'}
               suffix={`${gpu.temperature}°C`}
               percentage={gpu.temperature}
             />
             <Sausage
-              icon={''}
               text={'GPU fan'}
               suffix={`${gpu.fanSpeed} rpm`}
               percentage={(gpu.fanSpeed / 2500) * 100}
             />
             <Sausage
-              icon={''}
               text={'Memory usage'}
               suffix={`${gpu.memory.used} Gb`}
               percentage={(gpu.memory.used / gpu.memory.total) * 100}
