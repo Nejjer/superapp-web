@@ -1,10 +1,12 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { DataEntity, TZmDiff, TZmTag } from "../types/zen-money-entities";
+
 import { zenMoneyApi } from "../api/zenMoneyApi";
-import { getZMToken } from "../utils/ZMToken";
+import { DataEntity, TZmDiff, TZmTag } from "../types/zen-money-entities";
 import { TUnits } from "../types/zen-money-types";
-import { getTotalByTag } from "../utils/getTotalByTag";
 import { getTagById } from "../utils/getTagName";
+import { getTotalByTag } from "../utils/getTotalByTag";
+import { getZMToken } from "../utils/ZMToken";
+
 
 
 const getFirstDayINmonthTimestamp = () => {

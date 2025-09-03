@@ -1,9 +1,9 @@
-const KEY = 'ZM_TOKEN'
+const KEY = 'ZM_TOKEN';
 
 export const getZMToken = () => {
-    return localStorage.getItem(KEY) || ''
-}
+  return localStorage.getItem(KEY) || '';
+};
 
 export const setZMToken = (token: string) => {
-    localStorage.setItem(KEY, token)
-}
+  localStorage.setItem(KEY, token);
+};

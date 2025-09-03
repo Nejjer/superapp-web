@@ -19,7 +19,7 @@ export const getTotalByTag = (transactions?: TZmTransaction[]): ITotalByTag[] =>
     })
 
     for (const key in total) {
-        if (total.hasOwnProperty(key)) { // Проверяем, что свойство принадлежит объекту, а не его прототипу
+        if (Object.prototype.hasOwnProperty.call(total, key)) { // Проверяем, что свойство принадлежит объекту, а не его прототипу
             result.push({ tagId: key, spent: total[key] })
         }
     }

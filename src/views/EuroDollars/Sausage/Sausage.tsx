@@ -1,17 +1,12 @@
-import { FC } from 'react';
-import styles from './style.module.scss';
-import { Progress, Text } from '@chakra-ui/react';
-import { useColorMode } from '../../../components/ui/color-mode';
+import { Progress } from '@chakra-ui/react';
+import { FC, ReactNode } from 'react';
 
 /** Сосиска
- * @property text Текст внутри сосиски
- * @property suffix Единица измерения
  * @property percentage Процент заполненности
  */
 interface Props {
-  text: string;
-  suffix: string;
   percentage: number;
+  children: ReactNode;
 }
 
 const getColor = (percentage: number): string => {
@@ -20,27 +15,19 @@ const getColor = (percentage: number): string => {
   else return 'green';
 };
 
-export const Sausage: FC<Props> = ({ percentage, text, suffix }) => {
-
-  const { colorMode } = useColorMode();
-
+export const Sausage: FC<Props> = ({ percentage, children }) => {
   return (
     <div>
       <Progress.Root shape={'rounded'} size={'lg'} value={percentage}>
-
-        <Progress.Track height={'30px'} borderRadius={'10px'} colorPalette={getColor(percentage)}>
+        <Progress.Track
+          height={'30px'}
+          borderRadius={'10px'}
+          colorPalette={getColor(percentage)}
+        >
           <Progress.Range />
-
-          <div className={styles.suffix}>
-            <Text color={colorMode === 'dark' ? 'white' : 'black'}>
-              {text}
-            </Text>
-            <Text color={colorMode === 'dark' ? 'white' : 'black'}>
-              {suffix}
-            </Text>
-          </div>
+          {children}
         </Progress.Track>
       </Progress.Root>
-    </div >
+    </div>
   );
 };

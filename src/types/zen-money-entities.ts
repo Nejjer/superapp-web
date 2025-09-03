@@ -1,5 +1,5 @@
-import type { TUnixTime, TUnits, TISODate, TMsTime } from './zen-money-types'
 import tagIcons from './tagIcons.json'
+import type { TISODate, TMsTime, TUnits, TUnixTime } from './zen-money-types'
 
 type TIconName = keyof typeof tagIcons
 
@@ -97,8 +97,8 @@ export type TZmUser = {
   planSettings: string
   paidTill: TUnixTime
   subscription: '10yearssubscription' | '1MonthSubscription' | string
-  subscriptionRenewalDate: any | null
 }
+
 
 export type TUser = TZmUser & {
   changed: TMsTime
