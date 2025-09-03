@@ -1,5 +1,9 @@
 import { TTagId, TZmTag } from "../types/zen-money-entities";
 
-export const getTagName = (tags: TZmTag[], tagId: TTagId): string => {
-    return tags.find(tag => tag.id === tagId)?.title || 'Без категории'
+export const getTagById = (tagId: TTagId, tags?: TZmTag[],): TZmTag => {
+    const tag = tags?.find(tag => tag.id === tagId);
+    if (!tag) {
+        throw new Error('tag not found!')
+    }
+    return tag;
 }

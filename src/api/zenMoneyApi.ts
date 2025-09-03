@@ -3,7 +3,7 @@ import { TToken } from "../types/zen-money-types";
 
 class ZenMoneyApi {
     public async getDiff(token: TToken,
-        diff: TZmDiff = { serverTimestamp: 0 }): Promise<TZmDiff> {
+        diff: Omit<TZmRequest, 'currentClientTimestamp'> = { serverTimestamp: 0 }): Promise<TZmDiff> {
         if (!token) throw Error('No token')
 
 

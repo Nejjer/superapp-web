@@ -1,9 +1,12 @@
 import { TTagId, TZmTransaction } from "../types/zen-money-entities";
 import { TUnits } from "../types/zen-money-types";
 
-export interface ITotalByTag { tag: TTagId, sum: TUnits }
+export interface ITotalByTag { tagId: TTagId, spent: TUnits }
 
-export const getTotalByTag = (transactions: TZmTransaction[]): ITotalByTag[] => {
+export const getTotalByTag = (transactions?: TZmTransaction[]): ITotalByTag[] => {
+    if (!transactions) {
+        throw new Error('transactions must be provided')
+    }
     const total: Record<TTagId, TUnits> = {};
     const result: ITotalByTag[] = [];
     transactions.forEach(transaction => {
@@ -17,7 +20,7 @@ export const getTotalByTag = (transactions: TZmTransaction[]): ITotalByTag[] => 
 
     for (const key in total) {
         if (total.hasOwnProperty(key)) { // Проверяем, что свойство принадлежит объекту, а не его прототипу
-            result.push({ tag: key, sum: total[key] })
+            result.push({ tagId: key, spent: total[key] })
         }
     }
 

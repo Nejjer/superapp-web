@@ -6,23 +6,26 @@ import { Toaster } from "./components/ui/toaster";
 import { Theme } from "@chakra-ui/react";
 import { Drawer } from "./components/Drawer";
 import { EuroDollars } from "./views/EuroDollars/EuroDollars";
+import { MobxStoreProvider } from "./stores";
 
 function App() {
 
   return (
-    <Provider>
-      <Theme >
-        <BrowserRouter basename="/app">
-          <Drawer />
-          <Routes>
-            <Route path="/" element={<Compumon />} />
-            <Route path="/retro" element={<RetroWeek />} />
-            <Route path="/EuroDollars" element={<EuroDollars />} />
-          </Routes>
-          <Toaster />
-        </BrowserRouter>
-      </Theme>
-    </Provider>
+    <MobxStoreProvider>
+      <Provider>
+        <Theme >
+          <BrowserRouter basename="/app">
+            <Drawer />
+            <Routes>
+              <Route path="/" element={<Compumon />} />
+              <Route path="/retro" element={<RetroWeek />} />
+              <Route path="/EuroDollars" element={<EuroDollars />} />
+            </Routes>
+            <Toaster />
+          </BrowserRouter>
+        </Theme>
+      </Provider>
+    </MobxStoreProvider>
   );
 }
 
