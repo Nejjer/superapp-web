@@ -8,6 +8,55 @@
   display: flex;
   gap: 20px;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding-right: 40px;
+}
+
+.planContainer {
+  border-radius: var(--border-radius);
+  padding: 12px;
+  &:hover {
+    cursor: pointer;
+    background-color: #9e9e9e;
+  }
+  transition: background-color ease 0.3s;
+}
+
+.planContainer__disableHover {
+  padding: 0;
+  &:hover {
+    cursor: default;
+    background-color: transparent;
+  }
+}
+
+.controlPanel {
+  position: relative;
+  &_text {
+    position: absolute;
+    left: 0;
+    width: 300px;
+    transform: scaleY(1);
+    transform-origin: top;
+    transition: transform ease 0.3s;
+  }
+
+  &_btns {
+    position: absolute;
+    left: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform ease 0.3s;
+  }
+
+  &:hover {
+    .controlPanel_btns {
+      transform: scaleY(1);
+    }
+
+    .controlPanel_text {
+      transform: scaleY(0);
+    }
+  }
 }

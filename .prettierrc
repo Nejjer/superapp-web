@@ -1,4 +1,7 @@
 {
-  "singleQuote": true,
-  "jsx-curly-brace-presence": false
+  "semi": true,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "jsxSingleQuote": true,
+  "singleQuote": true
 }

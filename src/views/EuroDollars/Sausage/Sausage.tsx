@@ -18,10 +18,10 @@ const getColor = (percentage: number): string => {
 export const Sausage: FC<Props> = ({ percentage, children }) => {
   return (
     <div>
-      <Progress.Root shape={'rounded'} size={'lg'} value={percentage}>
+      <Progress.Root shape='rounded' size='lg' value={percentage}>
         <Progress.Track
-          height={'30px'}
-          borderRadius={'10px'}
+          height='50px'
+          borderRadius='10px'
           colorPalette={getColor(percentage)}
         >
           <Progress.Range />
