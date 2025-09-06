@@ -1,10 +1,12 @@
 import {
+  Card,
   Collapsible,
   Container,
   HStack,
   IconButton,
   Input,
   Stack,
+  Status,
   Text,
 } from '@chakra-ui/react';
 import cn from 'classnames';
@@ -12,12 +14,15 @@ import { observer } from 'mobx-react-lite';
 import { FC, useEffect, useRef, useState } from 'react';
 import { RxCircle, RxCrosshair1, RxCrumpledPaper } from 'react-icons/rx';
 
+import { Loader } from '../../components/Loader';
 import { useColorMode } from '../../components/ui/color-mode';
 import { useMobxStore } from '../../stores';
 import { TRenderPlanItem } from '../../stores/EuroDollarStore';
+import { getSpendStatus } from '../../utils/getSpendStatus';
 import { Drawer } from './Drawer';
 import { Sausage } from './Sausage';
 import styles from './style.module.scss';
+import { Totals } from './Totals';
 
 const ElementPlan: FC<TRenderPlanItem> = ({ spent, tag, plane }) => {
   const { colorMode } = useColorMode();
@@ -74,7 +79,9 @@ const ElementPlan: FC<TRenderPlanItem> = ({ spent, tag, plane }) => {
         </HStack>
       </HStack>
       <HStack>
-        <Text color={colorMode === 'dark' ? 'white' : 'black'}>{spent}</Text>
+        <Text color={colorMode === 'dark' ? 'white' : 'black'}>
+          {spent.toLocaleString()}
+        </Text>
         <div
           className={cn(
             styles.planContainer,
@@ -83,6 +90,9 @@ const ElementPlan: FC<TRenderPlanItem> = ({ spent, tag, plane }) => {
           onClick={handleTextClick}
           style={{ width }}
         >
+          <Status.Root position='absolute' top='18px' left='-2px'>
+            <Status.Indicator colorPalette={getSpendStatus(spent, plane)} />
+          </Status.Root>
           {isInputActive ? (
             <Input
               variant='subtle'
@@ -101,7 +111,7 @@ const ElementPlan: FC<TRenderPlanItem> = ({ spent, tag, plane }) => {
               ref={(ins) => (textRef.current = ins)}
               whiteSpace='pre'
             >
-              {plane}
+              {plane.toLocaleString()}
             </Text>
           )}
         </div>
@@ -118,7 +128,6 @@ export const EuroDollars = observer(() => {
     handleSetTimeout();
     return () => {
       clearTimeout(timeoutId.current);
-      console.log('CLEAR TIMEOUT');
     };
   }, []);
 
@@ -133,66 +142,132 @@ export const EuroDollars = observer(() => {
     );
   };
 
+  if (!euroDollarStore.loaded) {
+    return <Loader />;
+  }
+
   return (
     <Container marginTop={8}>
       <Drawer />
       <Stack gap={8}>
-        <Stack gap={4}>
-          <Text fontSize='2xl'>Обязательные</Text>
-
-          {euroDollarStore.planItems
-            .filter((plan) => plan.category === 'necessary')
-            .map(({ spent, tag, plane, category }) => (
-              <Sausage percentage={(spent / plane) * 100} key={tag.id}>
-                <ElementPlan
-                  tag={tag}
-                  spent={spent}
-                  plane={plane}
-                  category={category}
-                />
-              </Sausage>
-            ))}
-        </Stack>
-        <Stack gap={4}>
-          <Text fontSize='2xl'>Необязательные</Text>
-
-          {euroDollarStore.planItems
-            .filter((plan) => plan.category === 'optional')
-            .map(({ spent, tag, plane, category }) => (
-              <Sausage percentage={(spent / plane) * 100} key={tag.id}>
-                <ElementPlan
-                  tag={tag}
-                  spent={spent}
-                  plane={plane}
-                  category={category}
-                />
-              </Sausage>
-            ))}
-        </Stack>
-        <Collapsible.Root>
-          <Stack gap={4}>
-            <Collapsible.Trigger asChild>
-              <Text fontSize='2xl' cursor='pointer'>
-                Архив
-              </Text>
-            </Collapsible.Trigger>
-            <Collapsible.Content>
-              <Stack gap={4}>
+        <Totals />
+        <Card.Root>
+          <Card.Header>
+            <HStack justify='space-between'>
+              <Text fontSize='2xl'>Обязательные</Text>
+              <Text fontSize='2xl'>
                 {euroDollarStore.planItems
-                  .filter((plan) => plan.category === 'archive')
-                  .map(({ spent, tag, plane, category }) => (
-                    <Sausage percentage={(spent / plane) * 100} key={tag.id}>
-                      <ElementPlan
-                        tag={tag}
-                        spent={spent}
-                        plane={plane}
-                        category={category}
-                      />
-                    </Sausage>
-                  ))}
-              </Stack>
-            </Collapsible.Content>
-          </Stack>
+                  .filter((plan) => plan.category === 'necessary')
+                  .reduce((prev, curr) => prev + curr.spent, 0)
+                  .toLocaleString()}{' '}
+                /{' '}
+                {euroDollarStore.planItems
+                  .filter((plan) => plan.category === 'necessary')
+                  .reduce((prev, curr) => prev + curr.plane, 0)
+                  .toLocaleString()}
+              </Text>
+            </HStack>
+          </Card.Header>
+          <Card.Body>
+            <Stack gap={4}>
+              {euroDollarStore.planItems
+                .filter((plan) => plan.category === 'necessary')
+                .sort((a, b) => b.spent - a.spent)
+                .map(({ spent, tag, plane, category }) => (
+                  <Sausage percentage={(spent / plane) * 100} key={tag.id}>
+                    <ElementPlan
+                      tag={tag}
+                      spent={spent}
+                      plane={plane}
+                      category={category}
+                    />
+                  </Sausage>
+                ))}
+            </Stack>
+          </Card.Body>
+        </Card.Root>
+
+        <Card.Root>
+          <Card.Header>
+            <HStack justify='space-between'>
+              <Text fontSize='2xl'>Необязательные</Text>
+              <Text fontSize='2xl'>
+                {euroDollarStore.planItems
+                  .filter((plan) => plan.category === 'optional')
+                  .reduce((prev, curr) => prev + curr.spent, 0)
+                  .toLocaleString()}{' '}
+                /{' '}
+                {euroDollarStore.planItems
+                  .filter((plan) => plan.category === 'optional')
+                  .reduce((prev, curr) => prev + curr.plane, 0)
+                  .toLocaleString()}
+              </Text>
+            </HStack>
+          </Card.Header>
+          <Card.Body>
+            <Stack gap={4}>
+              {euroDollarStore.planItems
+                .filter((plan) => plan.category === 'optional')
+                .sort((a, b) => b.spent - a.spent)
+                .map(({ spent, tag, plane, category }) => (
+                  <Sausage percentage={(spent / plane) * 100} key={tag.id}>
+                    <ElementPlan
+                      tag={tag}
+                      spent={spent}
+                      plane={plane}
+                      category={category}
+                    />
+                  </Sausage>
+                ))}
+            </Stack>
+          </Card.Body>
+        </Card.Root>
+
+        <Collapsible.Root>
+          <Card.Root>
+            <Card.Header>
+              <Collapsible.Trigger asChild>
+                <HStack justify='space-between'>
+                  <Text fontSize='2xl'>Архив</Text>
+                  <Text fontSize='2xl'>
+                    {euroDollarStore.planItems
+                      .filter((plan) => plan.category === 'archive')
+                      .reduce((prev, curr) => prev + curr.spent, 0)
+                      .toLocaleString()}{' '}
+                    /{' '}
+                    {euroDollarStore.planItems
+                      .filter((plan) => plan.category === 'archive')
+                      .reduce((prev, curr) => prev + curr.plane, 0)
+                      .toLocaleString()}
+                  </Text>
+                </HStack>
+              </Collapsible.Trigger>
+            </Card.Header>
+            <Card.Body>
+              <Collapsible.Content>
+                <Stack gap={4}>
+                  {euroDollarStore.planItems
+                    .filter((plan) => plan.category === 'archive')
+                    .sort((a, b) => b.spent - a.spent)
+                    .map(({ spent, tag, plane, category }) => (
+                      <Sausage
+                        percentage={
+                          spent == 0 && spent == 0 ? 0 : (spent / plane) * 100
+                        }
+                        key={tag.id}
+                      >
+                        <ElementPlan
+                          tag={tag}
+                          spent={spent}
+                          plane={plane}
+                          category={category}
+                        />
+                      </Sausage>
+                    ))}
+                </Stack>
+              </Collapsible.Content>
+            </Card.Body>
+          </Card.Root>
         </Collapsible.Root>
       </Stack>
     </Container>

@@ -16,8 +16,12 @@ export const getTransactionSumByTags = (
     if (!total[tag.id]) {
       total[tag.id] = 0;
     }
-    total[tag.id] +=
-      transactions.find((trans) => trans.tag?.includes(tag.id))?.outcome || 0;
+    total[tag.id] = transactions.reduce((previousValue, currentValue) => {
+      if (currentValue.tag?.includes(tag.id)) {
+        previousValue += currentValue.outcome;
+      }
+      return previousValue;
+    }, 0);
   });
 
   for (const key in total) {

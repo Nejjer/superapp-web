@@ -1,6 +1,6 @@
 import { CategorizeTags } from '../stores/EuroDollarStore.ts';
 import { TZmDiff, TZmRequest } from '../types/zen-money-entities';
-import { TToken } from '../types/zen-money-types';
+import { TToken, TUnits } from '../types/zen-money-types';
 import { TPlanByTagId } from '../utils/getPlanByTagId.ts';
 
 class ZenMoneyApi {
@@ -46,6 +46,14 @@ class ZenMoneyApi {
 
   public async getCategorizeTags(): Promise<CategorizeTags> {
     return JSON.parse(localStorage.getItem('categorizedTagIds') || '{}');
+  }
+
+  public async sendPodushkaTarget(val: TUnits): Promise<void> {
+    localStorage.setItem('podushka', JSON.stringify(val));
+  }
+
+  public async getPodushkaTarget(): Promise<TUnits> {
+    return JSON.parse(localStorage.getItem('podushka') || '0');
   }
 }
 
