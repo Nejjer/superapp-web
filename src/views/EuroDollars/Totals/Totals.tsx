@@ -1,4 +1,4 @@
-import { Badge, Card, HStack, Stack, Stat, Text } from '@chakra-ui/react';
+import { Badge, Card, SimpleGrid, Stack, Stat, Text } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 
@@ -48,7 +48,7 @@ export const Totals: FC = observer(() => {
           {/*    {euroDollarStore.podushkaTarget.toLocaleString()}*/}
           {/*  </Text>*/}
           {/*</Sausage>*/}
-          <HStack align='top'>
+          <SimpleGrid minChildWidth='40' gap={6}>
             {/* Остаток денег за месяц */}
             <Stat.Root>
               <Stat.Label>Потрачено</Stat.Label>
@@ -159,7 +159,8 @@ export const Totals: FC = observer(() => {
               <Stat.HelpText>
                 {euroDollarStore.planItems
                   .filter((plan) => plan.spent > plan.plane)
-                  .reduce((prev, curr) => prev + curr.spent, 0) || ''}
+                  .reduce((prev, curr) => prev - (curr.plane - curr.spent), 0)
+                  ?.toLocaleString() || ''}
               </Stat.HelpText>
             </Stat.Root>{' '}
             {/* Мотоцикл */}
@@ -186,7 +187,7 @@ export const Totals: FC = observer(() => {
                 </Badge>
               )}
             </Stat.Root>
-          </HStack>
+          </SimpleGrid>
         </Stack>
       </Card.Body>
     </Card.Root>

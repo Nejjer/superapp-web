@@ -109,13 +109,14 @@ export class EuroDollarStore {
       this.currentMonthDiff = {
         ...diff,
         transaction: diff.transaction?.filter(
-          ({ date }) => date >= currentMonth
+          ({ date, deleted }) => date >= currentMonth && !deleted
         ),
       };
       this.lastMonthDiff = {
         ...diff,
         transaction: diff.transaction?.filter(
-          ({ date }) => date < currentMonth && date >= lastMonth
+          ({ date, deleted }) =>
+            date < currentMonth && date >= lastMonth && !deleted
         ),
       };
       this.loaded = true;
@@ -162,7 +163,10 @@ export class EuroDollarStore {
   get podushkaIncome() {
     return (
       this.safeDiff.transaction?.reduce((prev, current) => {
-        if (current.incomeAccount === PODUSHKA_ID) {
+        if (
+          current.incomeAccount === PODUSHKA_ID &&
+          current.incomeAccount !== current.outcomeAccount
+        ) {
           return prev + current.income;
         } else if (current.outcomeAccount === PODUSHKA_ID) {
           return prev - current.outcome;

@@ -143,7 +143,12 @@ export const EuroDollars = observer(() => {
   };
 
   if (!euroDollarStore.loaded) {
-    return <Loader />;
+    return (
+      <div>
+        <Drawer />
+        <Loader />
+      </div>
+    );
   }
 
   return (

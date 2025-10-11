@@ -57,6 +57,9 @@ export const Drawer: FC = () => {
                 >
                   EuroDollars
                 </Button>
+                <Button variant='outline' onClick={() => navigate('/WLED')}>
+                  WLED
+                </Button>
                 <Separator />
                 <Button variant='subtle' onClick={() => setOpen(false)}>
                   Close
