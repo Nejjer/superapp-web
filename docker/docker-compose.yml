@@ -2,9 +2,6 @@ version: '3.8'
 
 services:
   superapp:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
     image: nejer/superapp:latest
     restart: unless-stopped
     container_name: superapp_container

@@ -15,6 +15,10 @@ npm run build
 cd ..
 
 echo "🐳 Собираем Docker образ: $APP_NAME"
-docker compose build
+docker build -t nejer/$APP_NAME -f docker/Dockerfile .
 
 echo "✅ Сборка успешно завершена!"
+
+echo "💅 Пушим докер образ!"
+
+docker push nejer/$APP_NAME:latest
