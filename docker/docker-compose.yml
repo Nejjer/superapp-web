@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  superapp:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: superapp:latest
+    container_name: superapp_container
+    ports:
+      - "5000:5000"

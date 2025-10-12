@@ -2,6 +2,7 @@ import { CategorizeTags } from '../stores/EuroDollarStore.ts';
 import { TZmDiff, TZmRequest } from '../types/zen-money-entities';
 import { TToken, TUnits } from '../types/zen-money-types';
 import { TPlanByTagId } from '../utils/getPlanByTagId.ts';
+import { axiosInstance } from './axiosInstance.ts';
 
 class ZenMoneyApi {
   public async getDiff(
@@ -31,29 +32,27 @@ class ZenMoneyApi {
   }
 
   public async getPlansByTagId(): Promise<TPlanByTagId> {
-    return JSON.parse(
-      localStorage.getItem('planByTagId') || '{}'
-    ) as TPlanByTagId;
+    return (await axiosInstance.get('planByTagId')).data;
   }
 
   public async sendPlanByTag(plansByTagIds: TPlanByTagId) {
-    localStorage.setItem('planByTagId', JSON.stringify(plansByTagIds));
+    await axiosInstance.post('planByTagId', JSON.stringify(plansByTagIds));
   }
 
   public async sendCategorizeTags(tagIds: CategorizeTags): Promise<void> {
-    localStorage.setItem('categorizedTagIds', JSON.stringify(tagIds));
+    await axiosInstance.post('categorizedTagIds', JSON.stringify(tagIds));
   }
 
   public async getCategorizeTags(): Promise<CategorizeTags> {
-    return JSON.parse(localStorage.getItem('categorizedTagIds') || '{}');
+    return (await axiosInstance.get('categorizedTagIds')).data;
   }
 
   public async sendPodushkaTarget(val: TUnits): Promise<void> {
-    localStorage.setItem('podushka', JSON.stringify(val));
+    await axiosInstance.post('podushka', JSON.stringify(val));
   }
 
   public async getPodushkaTarget(): Promise<TUnits> {
-    return JSON.parse(localStorage.getItem('podushka') || '0');
+    return (await axiosInstance.get('podushka')).data;
   }
 }
 
