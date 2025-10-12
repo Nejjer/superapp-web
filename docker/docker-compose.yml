@@ -7,3 +7,5 @@ services:
     container_name: superapp_container
     ports:
       - "5000:5000"
+    volumes:
+      - ./servers/.node-persist:/app/servers/.node-persist
