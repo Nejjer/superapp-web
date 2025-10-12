@@ -5,20 +5,24 @@ import fastifyCors from '@fastify/cors';
 import { fastifyStatic } from '@fastify/static';
 import Fastify from 'fastify';
 import storage from 'node-persist';
-import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const fastify = Fastify({
   logger: true,
 });
 
 fastify.register(fastifyCors);
 fastify.register(fastifyStatic, {
-  root: path.join(__dirname, '../dist'),
+  root: path.join(import.meta.dirname, '../dist'),
+  maxAge: '30d',
+  immutable: true,
+});
+fastify.get('/', function (req, reply) {
+  // index.html should never be cached
+  reply.sendFile('index.html', { maxAge: 0, immutable: false });
 });
 
 storage.init({});
+
 // Declare a route
 fastify.post('/planByTagId', async function handler(request) {
   await storage.setItem('planByTagId', JSON.stringify(request.body));
