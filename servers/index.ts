@@ -16,7 +16,6 @@ const fastify = Fastify({
 fastify.register(fastifyCors);
 fastify.register(fastifyStatic, {
   root: path.join(__dirname, '../dist'),
-  prefix: '/app',
 });
 
 storage.init({});
