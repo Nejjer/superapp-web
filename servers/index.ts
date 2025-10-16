@@ -1,10 +1,10 @@
-// Import the framework and instantiate it
-import * as path from 'node:path';
-
 import fastifyCors from '@fastify/cors';
-import { fastifyStatic } from '@fastify/static';
+import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify';
 import storage from 'node-persist';
+import path from 'path';
+
+import { todoistRoutes } from './todoist/todoist.js';
 
 const fastify = Fastify({
   logger: true,
@@ -12,7 +12,7 @@ const fastify = Fastify({
 
 fastify.register(fastifyCors);
 fastify.register(fastifyStatic, {
-  root: path.join(import.meta.dirname, '../dist'),
+  root: path.join(import.meta.dirname, '../../dist'),
   maxAge: '30d',
   immutable: true,
 });
@@ -20,10 +20,23 @@ fastify.get('/', function (req, reply) {
   // index.html should never be cached
   reply.sendFile('index.html', { maxAge: 0, immutable: false });
 });
-
+// ⚡️ Обработка всех маршрутов SPA (fallback на index.html)
+fastify.setNotFoundHandler((req, reply) => {
+  if (req.raw.url?.startsWith('/api')) {
+    // Если у тебя есть API, не надо отдавать index.html
+    reply.status(404).send({ error: 'Not Found' });
+  } else {
+    reply.sendFile('index.html', {
+      maxAge: 0,
+      immutable: false,
+    });
+  }
+});
 storage.init({});
 
 // Declare a route
+fastify.register(todoistRoutes, { prefix: '/todo' });
+
 fastify.post('/planByTagId', async function handler(request) {
   await storage.setItem('planByTagId', JSON.stringify(request.body));
   return;

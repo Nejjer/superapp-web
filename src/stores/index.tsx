@@ -1,12 +1,15 @@
 import React, { createContext, useContext } from 'react';
 
 import { EuroDollarStore } from './EuroDollarStore';
+import { TodoistStore } from './TodoistStore.ts';
 
 class RootStore {
   euroDollarStore: EuroDollarStore;
+  todoistStore: TodoistStore;
 
   constructor() {
     this.euroDollarStore = new EuroDollarStore();
+    this.todoistStore = new TodoistStore();
   }
 }
 

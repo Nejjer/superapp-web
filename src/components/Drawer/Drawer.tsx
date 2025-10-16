@@ -48,6 +48,9 @@ export const Drawer: FC = () => {
                 <Button variant='outline' onClick={() => navigate('/')}>
                   Compumon
                 </Button>
+                <Button variant='outline' onClick={() => navigate('/todo')}>
+                  TODO
+                </Button>
                 <Button variant='outline' onClick={() => navigate('/retro')}>
                   Retro
                 </Button>

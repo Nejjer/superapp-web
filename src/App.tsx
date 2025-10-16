@@ -8,6 +8,7 @@ import { MobxStoreProvider } from './stores';
 import { Compumon } from './views/Compumon';
 import { EuroDollars } from './views/EuroDollars/EuroDollars';
 import { RetroWeek } from './views/RetroWeek/RetroWeek';
+import { TodoistCard } from './views/Todoist/Todoist';
 import { WLED } from './views/WLED';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
               <Route path='/' element={<Compumon />} />
               <Route path='/retro' element={<RetroWeek />} />
               <Route path='/EuroDollars' element={<EuroDollars />} />
+              <Route path='/todo' element={<TodoistCard />} />
               <Route path='/WLED' element={<WLED />} />
             </Routes>
             <Toaster />
