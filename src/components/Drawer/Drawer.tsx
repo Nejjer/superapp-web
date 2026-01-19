@@ -1,77 +1,97 @@
-import {
-  Button,
-  Drawer as ChakraDrawer,
-  IconButton,
-  Portal,
-  Separator,
-  Stack,
-} from '@chakra-ui/react';
-import { FC, useState } from 'react';
-import { RxHamburgerMenu } from 'react-icons/rx';
+import { Button, Grid, GridItem, Switch } from '@chakra-ui/react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { useColorMode } from '../ui/color-mode';
-import styles from './styles.module.scss';
 
 export const Drawer: FC = () => {
-  const [open, setOpen] = useState(false);
   const navigation = useNavigate();
   const { toggleColorMode } = useColorMode();
 
-  const navigate = (to: string) => {
-    setOpen(false);
+  const [autoSwitch, setAutoSwitch] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setIndex] = useState(0);
+
+  // Маршруты, которые нужно циклично переключать
+  const routes = ['/', '/todo', '/retro', '/EuroDollars', '/WLED'];
+
+  const navigateTo = (to: string) => {
     navigation(to);
   };
 
+  // Автопереключение
+  useEffect(() => {
+    if (!autoSwitch) return;
+
+    const interval = setInterval(() => {
+      setIndex((prev) => {
+        const next = (prev + 1) % routes.length;
+        navigateTo(routes[next]);
+        return next;
+      });
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, [autoSwitch]);
+
   return (
-    <ChakraDrawer.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
-      <ChakraDrawer.Trigger asChild>
-        <IconButton variant='outline' className={styles.btn}>
-          <RxHamburgerMenu />
-        </IconButton>
-      </ChakraDrawer.Trigger>
-      <Portal>
-        <ChakraDrawer.Backdrop />
-        <ChakraDrawer.Positioner>
-          <ChakraDrawer.Content>
-            <ChakraDrawer.Body>
-              <Stack justifyContent='end' height='100%'>
-                <Button onClick={toggleColorMode}>Toggle theme</Button>
-                <Separator />
-                <Separator />
-                <Button
-                  variant='outline'
-                  onClick={() => window.location.assign('/')}
-                >
-                  Galery
-                </Button>
-                <Button variant='outline' onClick={() => navigate('/')}>
-                  Compumon
-                </Button>
-                <Button variant='outline' onClick={() => navigate('/todo')}>
-                  TODO
-                </Button>
-                <Button variant='outline' onClick={() => navigate('/retro')}>
-                  Retro
-                </Button>
-                <Button
-                  variant='outline'
-                  onClick={() => navigate('/EuroDollars')}
-                >
-                  EuroDollars
-                </Button>
-                <Button variant='outline' onClick={() => navigate('/WLED')}>
-                  WLED
-                </Button>
-                <Separator />
-                <Button variant='subtle' onClick={() => setOpen(false)}>
-                  Close
-                </Button>
-              </Stack>
-            </ChakraDrawer.Body>
-          </ChakraDrawer.Content>
-        </ChakraDrawer.Positioner>
-      </Portal>
-    </ChakraDrawer.Root>
+    <Grid
+      templateColumns='repeat(8, 1fr)'
+      justifyItems='center'
+      marginTop={4}
+      alignItems='center'
+    >
+      <GridItem>
+        <Button onClick={toggleColorMode}>Toggle theme</Button>
+      </GridItem>
+
+      {/* Galery — не участвует в автопереключении */}
+      <GridItem>
+        <Button variant='outline' onClick={() => window.location.assign('/')}>
+          Galery
+        </Button>
+      </GridItem>
+
+      <GridItem>
+        <Button variant='outline' onClick={() => navigateTo('/')}>
+          Compumon
+        </Button>
+      </GridItem>
+
+      <GridItem>
+        <Button variant='outline' onClick={() => navigateTo('/todo')}>
+          TODO
+        </Button>
+      </GridItem>
+
+      <GridItem>
+        <Button variant='outline' onClick={() => navigateTo('/retro')}>
+          Retro
+        </Button>
+      </GridItem>
+
+      <GridItem>
+        <Button variant='outline' onClick={() => navigateTo('/EuroDollars')}>
+          EuroDollars
+        </Button>
+      </GridItem>
+
+      <GridItem>
+        <Button variant='outline' onClick={() => navigateTo('/WLED')}>
+          WLED
+        </Button>
+      </GridItem>
+
+      <GridItem>
+        <Switch.Root
+          checked={autoSwitch}
+          onCheckedChange={(e) => setAutoSwitch(e.checked)}
+        >
+          <Switch.HiddenInput />
+          <Switch.Control />
+          <Switch.Label>Auto switch</Switch.Label>
+        </Switch.Root>
+      </GridItem>
+    </Grid>
   );
 };

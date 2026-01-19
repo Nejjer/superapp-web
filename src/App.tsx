@@ -1,4 +1,5 @@
 import { Theme } from '@chakra-ui/react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter, Route, Routes } from 'react-router';
 
 import { Drawer } from './components/Drawer';
@@ -13,23 +14,25 @@ import { WLED } from './views/WLED';
 
 function App() {
   return (
-    <MobxStoreProvider>
-      <Provider>
-        <Theme>
-          <BrowserRouter basename='/app'>
-            <Drawer />
-            <Routes>
-              <Route path='/' element={<Compumon />} />
-              <Route path='/retro' element={<RetroWeek />} />
-              <Route path='/EuroDollars' element={<EuroDollars />} />
-              <Route path='/todo' element={<TodoistCard />} />
-              <Route path='/WLED' element={<WLED />} />
-            </Routes>
-            <Toaster />
-          </BrowserRouter>
-        </Theme>
-      </Provider>
-    </MobxStoreProvider>
+    <ErrorBoundary fallback={<div>Бля, упали</div>}>
+      <MobxStoreProvider>
+        <Provider>
+          <Theme>
+            <BrowserRouter basename='/app'>
+              <Drawer />
+              <Routes>
+                <Route path='/' element={<Compumon />} />
+                <Route path='/retro' element={<RetroWeek />} />
+                <Route path='/EuroDollars' element={<EuroDollars />} />
+                <Route path='/todo' element={<TodoistCard />} />
+                <Route path='/WLED' element={<WLED />} />
+              </Routes>
+              <Toaster />
+            </BrowserRouter>
+          </Theme>
+        </Provider>
+      </MobxStoreProvider>
+    </ErrorBoundary>
   );
 }
 

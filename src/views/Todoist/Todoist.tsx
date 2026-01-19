@@ -51,7 +51,7 @@ export const TodoistCard = observer(() => {
   };
 
   return (
-    <Container marginTop={8}>
+    <Container marginTop={4}>
       <Card.Root>
         <CardHeader>
           <Text fontSize='2xl'>Задачи</Text>

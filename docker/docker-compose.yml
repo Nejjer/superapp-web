@@ -9,3 +9,9 @@ services:
       - "5000:5000"
     volumes:
       - ./servers/.node-persist:/app/servers/.node-persist
+  zerro:
+    image: nejer/zerro:latest
+    restart: unless-stopped
+    container_name: zerro_container
+    ports:
+      - "5001:3000"

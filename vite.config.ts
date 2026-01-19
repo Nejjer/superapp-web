@@ -1,7 +1,7 @@
-import react from '@vitejs/plugin-react';
-import browserslistToEsbuild from 'browserslist-to-esbuild';
-import { defineConfig } from 'vite';
 //import { VitePWA } from 'vite-plugin-pwa';
+import legacy from '@vitejs/plugin-legacy';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 /**
  * VitePWA({
@@ -31,18 +31,24 @@ import { defineConfig } from 'vite';
  */
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  build: { target: browserslistToEsbuild('Chrome >= 81') },
+  plugins: [
+    react(),
+    legacy({
+      targets: ['chrome >= 80'],
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime'], // на всякий случай
+    }),
+  ],
   server: {
     host: '0.0.0.0',
     port: 3000,
     proxy: {
-      '/mon/': {
-        target: 'https://arasaksa-home.didns.ru/',
+      '/mon': {
+        target: 'https://arasaka-home.didns.ru',
         changeOrigin: true,
       },
       '/api': {
-        target: 'https://arasaksa-home.didns.ru',
+        //target: 'https://arasaksa-home.didns.ru',
+        target: 'http://127.0.0.1:5000',
         changeOrigin: true,
       },
     },

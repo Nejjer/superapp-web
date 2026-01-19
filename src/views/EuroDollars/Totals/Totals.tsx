@@ -9,7 +9,7 @@ function calculatePercentageIncrease(
   newValue: number
 ): number {
   if (oldValue === 0) {
-    throw new Error('Исходное значение не может быть нулевым');
+    return 0;
   }
   return ((newValue - oldValue) / oldValue) * 100;
 }

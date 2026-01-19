@@ -1,14 +1,4 @@
-import {
-  Card,
-  Collapsible,
-  Container,
-  HStack,
-  IconButton,
-  Input,
-  Stack,
-  Status,
-  Text,
-} from '@chakra-ui/react';
+import { Card, Collapsible, Container, HStack, IconButton, Input, Stack, Status, Text, } from '@chakra-ui/react';
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -152,7 +142,14 @@ export const EuroDollars = observer(() => {
   }
 
   return (
-    <Container marginTop={8}>
+    <iframe
+      src='/zerro-app'
+      style={{ width: '100%', maxWidth: '800px', height: '90vh' }}
+    ></iframe>
+  );
+
+  return (
+    <Container marginTop={4}>
       <Drawer />
       <Stack gap={8}>
         <Totals />
